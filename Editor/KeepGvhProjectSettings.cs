@@ -34,12 +34,20 @@ namespace Kogane.Internal
 
                 if ( !File.Exists( sourcePath ) ) return;
 
-                File.Copy
-                (
-                    sourceFileName: sourcePath,
-                    destFileName: "ProjectSettings/GvhProjectSettings.xml",
-                    overwrite: true
-                );
+                try
+                {
+                    File.Copy
+                    (
+                        sourceFileName: sourcePath,
+                        destFileName: "ProjectSettings/GvhProjectSettings.xml",
+                        overwrite: true
+                    );
+                }
+                // 以下の例外を握りつぶす
+                // IOException: The process cannot access the file 'XXXX\ProjectSettings\GvhProjectSettings.xml' because it is being used by another process.
+                catch ( IOException )
+                {
+                }
             }
         }
     }
